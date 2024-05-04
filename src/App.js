@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { PrimeReactProvider } from "primereact/api";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Home from "./Pages/Home";
+import Data from "./Pages/Data";
+function Main() {
+    const routes = createBrowserRouter([
+        {
+            path: "/",
+            element: <Home></Home>,
+        },
+        {
+            path: "/repositeries",
+            element: <Data></Data>,
+        },
+    ]);
+    return <RouterProvider router={routes} />;
 }
-
+function App() {
+    const value = {
+        ripple: true,
+    };
+    return (
+        <Provider store={store}>
+            <PrimeReactProvider value={value}>
+                <Main />
+            </PrimeReactProvider>
+        </Provider>
+    );
+}
 export default App;
