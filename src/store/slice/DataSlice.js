@@ -68,7 +68,7 @@ const initialState = {
     data: "",
     isLoading: false,
     error: null,
-    totalCount: 150,
+    totalCount: 0,
 };
 const data = createSlice({
     initialState,

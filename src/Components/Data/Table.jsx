@@ -138,6 +138,17 @@ function Table() {
                             </td>
                         </tr>
                     )}
+                    {data.totalCount == 0 && (
+                        <tr className="bg-gray-400">
+                            <td
+                                colSpan="10"
+                                className="text-red-500 font-bold
+                             md:py-3 md:px-4 p-2"
+                            >
+                                No Data Available
+                            </td>
+                        </tr>
+                    )}
                     {data.isLoading && (
                         <>
                             <LoadingRow></LoadingRow>
