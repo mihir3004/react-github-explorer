@@ -53,10 +53,10 @@ function Table() {
         dispatch(setSortDirection({ sortDirection: direction }));
     };
     return (
-        <div className=" lg:overflow-hidden w-full overflow-scroll ">
-            <table className=" mt-5 rounded-lg overflow-hidden w-full table-auto border-collapse text-white">
-                <thead className="">
-                    <tr className="bg-gray-900 text-lg p-10 ">
+        <div className="w-full overflow-y-scroll max-h-[33rem] ">
+            <table className=" mt-5  w-full table-auto border-collapse text-white">
+                <thead className="sticky top-0 z-50 p-4">
+                    <tr className="bg-gray-900 text-lg ">
                         <th className="md:py-4 md:px-6 p-2 cursor-pointer whitespace-nowrap">
                             Sr no.
                         </th>
@@ -125,7 +125,7 @@ function Table() {
                         </th>
                     </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody className="text-center ">
                     {data.error && (
                         <tr className="bg-gray-400">
                             <td
@@ -166,7 +166,7 @@ function Table() {
 
                                 <td className="py-3 px-4">{index + 1}</td>
                                 <td className="py-3 px-4 ">
-                                    <div className="flex space-x-5 justify-center whitespace-nowrap">
+                                    <div className="flex space-x-5 justify-center ">
                                         <img
                                             className="rounded-[50%]"
                                             height={10}
@@ -177,7 +177,9 @@ function Table() {
                                         <div>{ele.owner.login}</div>
                                     </div>
                                 </td>
-                                <td className="py-3 px-4">{ele.name}</td>
+                                <td className="py-3 px-4 break-words max-w-[200px]">
+                                    {ele.name}
+                                </td>
                                 <td className="py-3 px-4">{ele.language}</td>
                                 <td className="py-3 px-4">
                                     {ele.stargazers_count}

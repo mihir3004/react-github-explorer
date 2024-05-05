@@ -25,7 +25,7 @@ function Data() {
                     <h1 className="text-5xl font-bold my-10 text-center text-white">
                         GitHub Repositories
                     </h1>
-                    <div className="overflow-x-auto rounded-lg md:p-10 p-5 shadow-2xl bg-gray-700">
+                    <div className="overflow-x-auto rounded-lg md:p-10 p-6 shadow-2xl bg-gray-700">
                         <Search />
                         <Table />
                         <Paginator />
