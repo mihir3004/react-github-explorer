@@ -2,6 +2,7 @@ import { Tooltip } from "primereact/tooltip";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortColumn, setSortDirection } from "../../store/slice/SearchSlice";
+import { Button } from "primereact/button";
 function LoadingRow() {
     return (
         <tr className="bg-gray-400 custom-target-icon text-black hover:bg-gray-700 cursor-pointer hover:text-white">
@@ -32,6 +33,9 @@ function LoadingRow() {
             <td className="py-3 px-4">
                 <div className="h-4 w-24 bg-gray-300 mx-auto rounded-md"></div>
             </td>
+            <td className="py-3 px-4">
+                <div className="h-4 w-24 bg-gray-300 mx-auto rounded-md"></div>
+            </td>
         </tr>
     );
 }
@@ -49,18 +53,24 @@ function Table() {
         dispatch(setSortDirection({ sortDirection: direction }));
     };
     return (
-        <div className=" md:overflow-hidden w-full overflow-scroll">
-            <table className=" mt-5 rounded-lg overflow-hidden w-full table-auto border-collapse  text-white">
+        <div className=" lg:overflow-hidden w-full overflow-scroll ">
+            <table className=" mt-5 rounded-lg overflow-hidden w-full table-auto border-collapse text-white">
                 <thead className="">
-                    <tr className="bg-gray-900 text-lg ">
-                        <th className="py-4 px-6 cursor-pointer">Index</th>
-                        <th className="py-4 px-6 cursor-pointer">GitHub ID</th>
-                        <th className="py-4 px-6 cursor-pointer">
+                    <tr className="bg-gray-900 text-lg p-10 ">
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer whitespace-nowrap">
+                            Sr no.
+                        </th>
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer">
+                            GitHub ID
+                        </th>
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer">
                             Repositery Name
                         </th>
-                        <th className="py-4 px-6 cursor-pointer">Language</th>
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer">
+                            Language
+                        </th>
                         <th
-                            className="py-4 px-6 cursor-pointer"
+                            className="md:py-4 md:px-6 p-2 cursor-pointer"
                             onClick={() => {
                                 handleSort("stars");
                             }}
@@ -72,35 +82,46 @@ function Table() {
                             </span>
                         </th>
                         <th
-                            className="py-4 px-6 cursor-pointer"
+                            className="md:py-4 md:px-6 p-2 cursor-pointer"
                             onClick={() => {
                                 handleSort("forks");
                             }}
                         >
-                            Forks{" "}
-                            {search.sortColumn === "forks" &&
-                                (search.sortDirection == "asc" ? "↑" : "↓")}
+                            <span className="flex whitespace-nowrap">
+                                Forks{" "}
+                                {search.sortColumn === "forks" &&
+                                    (search.sortDirection == "asc" ? "↑" : "↓")}
+                            </span>
                         </th>
                         <th
-                            className="py-4 px-6 cursor-pointer"
+                            className="md:py-4 md:px-6 p-2 cursor-pointer"
                             onClick={() => {
                                 handleSort("size");
                             }}
                         >
+                            <span className="flex whitespace-nowrap"></span>
                             Size{" "}
                             {search.sortColumn === "size" &&
                                 (search.sortDirection == "asc" ? "↑" : "↓")}
                         </th>
-                        <th className="py-4 px-6 cursor-pointer">Created At</th>
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer">
+                            Created At
+                        </th>
+
                         <th
-                            className="py-4 px-6 cursor-pointer"
+                            className="md:py-4 md:px-6 p-2 cursor-pointer"
                             onClick={() => {
                                 handleSort("updated");
                             }}
                         >
-                            Updated At{" "}
-                            {search.sortColumn === "updated" &&
-                                (search.sortDirection == "asc" ? "↑" : "↓")}
+                            <span className="flex whitespace-nowrap">
+                                Updated At{" "}
+                                {search.sortColumn === "updated" &&
+                                    (search.sortDirection == "asc" ? "↑" : "↓")}
+                            </span>
+                        </th>
+                        <th className="md:py-4 md:px-6 p-2 cursor-pointer">
+                            Visit
                         </th>
                     </tr>
                 </thead>
@@ -108,9 +129,9 @@ function Table() {
                     {data.error && (
                         <tr className="bg-gray-400">
                             <td
-                                colSpan="9"
+                                colSpan="10"
                                 className="text-red-500 font-bold
-                             py-3 px-4"
+                             md:py-3 md:px-4 p-2"
                             >
                                 Error: Please wait for some time before trying
                                 again.
@@ -145,7 +166,7 @@ function Table() {
 
                                 <td className="py-3 px-4">{index + 1}</td>
                                 <td className="py-3 px-4 ">
-                                    <div className="flex space-x-5 justify-center">
+                                    <div className="flex space-x-5 justify-center whitespace-nowrap">
                                         <img
                                             className="rounded-[50%]"
                                             height={10}
@@ -173,10 +194,18 @@ function Table() {
                                         ele.updated_at
                                     ).toLocaleDateString()}
                                 </td>
+                                <td className="py-3 px-4">
+                                    <Button
+                                        onClick={() => {
+                                            window.open(ele.html_url);
+                                        }}
+                                    >
+                                        {" "}
+                                        Go
+                                    </Button>
+                                </td>
                             </tr>
                         ))}
-
-                    {/* More table rows here */}
                 </tbody>
             </table>
         </div>
