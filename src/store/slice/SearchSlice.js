@@ -5,6 +5,8 @@ const initialState = {
     value: "",
     count: 5,
     pageNumber: 1,
+    sortColumn: "",
+    sortDirection: "",
 };
 const search = createSlice({
     initialState,
@@ -12,6 +14,12 @@ const search = createSlice({
     reducers: {
         setSearchBy: (state, action) => {
             state.searchBy = action.payload.searchBy;
+        },
+        setSortColumn: (state, action) => {
+            state.sortColumn = action.payload.sortColumn;
+        },
+        setSortDirection: (state, action) => {
+            state.sortDirection = action.payload.sortDirection;
         },
         setValue: (state, action) => {
             state.value = action.payload.value;
@@ -36,6 +44,12 @@ const search = createSlice({
         removeCount: (state, action) => {
             state.count = 1;
         },
+        removeSortColumn: (state, action) => {
+            state.count = 1;
+        },
+        removeSortDirection: (state, action) => {
+            state.count = 1;
+        },
         removeSearchBy: (state, action) => {
             state.searchBy = "";
         },
@@ -50,6 +64,10 @@ export const {
     removeCount,
     incrementPage,
     decrementPage,
+    setSortColumn,
+    setSortDirection,
+    removeSortColumn,
+    removeSortDirection,
     setPageNumber,
 } = search.actions;
 export default search.reducer;

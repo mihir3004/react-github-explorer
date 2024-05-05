@@ -1,6 +1,7 @@
 import { Tooltip } from "primereact/tooltip";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortColumn, setSortDirection } from "../../store/slice/SearchSlice";
 function LoadingRow() {
     return (
         <tr className="bg-gray-400 custom-target-icon text-black hover:bg-gray-700 cursor-pointer hover:text-white">
@@ -17,7 +18,16 @@ function LoadingRow() {
                 <div className="h-4 w-12 bg-gray-300 mx-auto rounded-md"></div>
             </td>
             <td className="py-3 px-4">
+                <div className="h-4 w-12 bg-gray-300 mx-auto rounded-md"></div>
+            </td>
+            <td className="py-3 px-4">
+                <div className="h-4 w-12 bg-gray-300 mx-auto rounded-md"></div>
+            </td>
+            <td className="py-3 px-4">
                 <div className="h-4 w-16 bg-gray-300 mx-auto rounded-md"></div>
+            </td>
+            <td className="py-3 px-4">
+                <div className="h-4 w-24 bg-gray-300 mx-auto rounded-md"></div>
             </td>
             <td className="py-3 px-4">
                 <div className="h-4 w-24 bg-gray-300 mx-auto rounded-md"></div>
@@ -27,7 +37,17 @@ function LoadingRow() {
 }
 function Table() {
     const data = useSelector((state) => state.data);
+    const search = useSelector((state) => state.search);
+    const dispatch = useDispatch();
     console.log(data.data);
+    const handleSort = (column) => {
+        let direction = "asc";
+        if (search.sortColumn === column && search.sortDirection === "asc") {
+            direction = "desc";
+        }
+        dispatch(setSortColumn({ sortColumn: column }));
+        dispatch(setSortDirection({ sortDirection: direction }));
+    };
     return (
         <div className=" md:overflow-hidden w-full overflow-scroll">
             <table className=" mt-5 rounded-lg overflow-hidden w-full table-auto border-collapse  text-white">
@@ -39,15 +59,56 @@ function Table() {
                             Repositery Name
                         </th>
                         <th className="py-4 px-6 cursor-pointer">Language</th>
-                        <th className="py-4 px-6 cursor-pointer">Stars</th>
+                        <th
+                            className="py-4 px-6 cursor-pointer"
+                            onClick={() => {
+                                handleSort("stars");
+                            }}
+                        >
+                            <span className="flex whitespace-nowrap">
+                                Stars{" "}
+                                {search.sortColumn === "stars" &&
+                                    (search.sortDirection == "asc" ? "↑" : "↓")}
+                            </span>
+                        </th>
+                        <th
+                            className="py-4 px-6 cursor-pointer"
+                            onClick={() => {
+                                handleSort("forks");
+                            }}
+                        >
+                            Forks{" "}
+                            {search.sortColumn === "forks" &&
+                                (search.sortDirection == "asc" ? "↑" : "↓")}
+                        </th>
+                        <th
+                            className="py-4 px-6 cursor-pointer"
+                            onClick={() => {
+                                handleSort("size");
+                            }}
+                        >
+                            Size{" "}
+                            {search.sortColumn === "size" &&
+                                (search.sortDirection == "asc" ? "↑" : "↓")}
+                        </th>
                         <th className="py-4 px-6 cursor-pointer">Created At</th>
+                        <th
+                            className="py-4 px-6 cursor-pointer"
+                            onClick={() => {
+                                handleSort("updated");
+                            }}
+                        >
+                            Updated At{" "}
+                            {search.sortColumn === "updated" &&
+                                (search.sortDirection == "asc" ? "↑" : "↓")}
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="text-center">
                     {data.error && (
                         <tr className="bg-gray-400">
                             <td
-                                colSpan="6"
+                                colSpan="9"
                                 className="text-red-500 font-bold
                              py-3 px-4"
                             >
@@ -100,9 +161,16 @@ function Table() {
                                 <td className="py-3 px-4">
                                     {ele.stargazers_count}
                                 </td>
+                                <td className="py-3 px-4">{ele.forks_count}</td>
+                                <td className="py-3 px-4">{ele.size} KB</td>
                                 <td className="py-3 px-4">
                                     {new Date(
                                         ele.created_at
+                                    ).toLocaleDateString()}
+                                </td>
+                                <td className="py-3 px-4">
+                                    {new Date(
+                                        ele.updated_at
                                     ).toLocaleDateString()}
                                 </td>
                             </tr>

@@ -38,18 +38,18 @@ function Search() {
     }, [dispatch, search.value]);
     return (
         <>
-            <div className="flex justify-end space-x-5">
+            <div className=" md:flex justify-end md:space-x-5">
                 <Dropdown
                     value={search.searchBy}
                     placeholder="Select Type"
                     options={dropdownOptions}
-                    className="focus:ring-2 h-full
+                    className="focus:ring-2 h-full w-full md:w-1/5
                      my-2 ring-0 focus:outline-none"
                     onChange={(e) => {
                         dispatch(setSearchBy({ searchBy: e.value }));
                     }}
                 ></Dropdown>
-                <div className="p-inputgroup w-full md:w-1/5 my-2 focus:ring-1 ">
+                <div className="p-inputgroup p-0  w-full md:w-1/5 my-2 focus:ring-1 ">
                     <Button
                         icon="pi pi-search"
                         className="cursor-pointer hover:scale-95"

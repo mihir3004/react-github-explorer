@@ -2,14 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 export const fetchData = createAsyncThunk(
     "data/fetchData",
-    async ({ value, count, pageNumber, searchBy }, thunkAPI) => {
+    async (
+        { value, count, pageNumber, searchBy, sortColumn, sortDirection },
+        thunkAPI
+    ) => {
         try {
             console.log(value);
             const fetchedData = await fetchRepositories(
                 value,
                 searchBy,
                 count,
-                pageNumber
+                pageNumber,
+                sortColumn,
+                sortDirection
             );
             return fetchedData;
         } catch (error) {
@@ -21,7 +26,9 @@ export const fetchRepositories = async (
     searchTerm,
     searchType,
     perPage,
-    page
+    page,
+    sortColumn,
+    sortDirection
 ) => {
     try {
         const config = {
@@ -41,8 +48,12 @@ export const fetchRepositories = async (
         } else {
             q = "created:>2021-01-01";
         }
+        let sort = "";
+        if (sortColumn) {
+            sort = `&sort=${sortColumn}&order=${sortDirection}`;
+        }
         const response = await axios.get(
-            `https://api.github.com/search/repositories?q=${q}&per_page=${perPage}&page=${page}`,
+            `https://api.github.com/search/repositories?q=${q}&per_page=${perPage}&page=${page}&${sort}`,
             config
         );
         return response.data;
